@@ -174,9 +174,9 @@ console.log(foo.a, foo.b); // 100 200
 * Конструктор может получить методы другого конструктора - "наследовать" его методы и свойства:
 ```javascript
 function Foo() {
-  this.a = 10;
+  var a = 10;
   this.hello = function() {
-    return this.a;
+    return a;
   }
 }
 
@@ -188,6 +188,39 @@ function Bar() {
 
 console.log(new Bar().hello()); // 10
 ```
+* Но при такой реализции у наследника нет доступ к приватным свойствам родителя - чтобы появился доступ к свойствам, их необходимо явно прописать в `this` родителя:
+```javascript
+// пример с ошибкой
+function Foo() {
+  var a = 10;
+  this.hello = function() {
+    return a;
+  }
+}
+
+function Bar() {
+  Foo.call(this);
+  this.b = 20;
+}
+
+console.log(new Bar().a); // ошибка 
+
+// правильный пример
+function Foo() {
+  this.a = 10;
+  this.hello = function() {
+    return this.a;
+  }
+}
+
+function Bar() {
+  Foo.call(this);
+  this.b = 20;
+}
+
+console.log(new Bar().a); // 10
+```
+
 
 ## Прототипы
 * Прототип служит резервным хранилищем свойств и методов для объекта - если атрибута нет у самого объекта, поиск переходит к прототипам. Грубый аналог `ChainMap` в Python
