@@ -12,30 +12,30 @@
 ```javascript
 var foo = function() {
   console.log('foo');
-};
+}
 ```
 
 * Function Declaration:
 ```javascript
 function foo() {
   console.log('foo');
-};
+}
 ```
 * Разница между **FE** и **FD** в том, что интерпретатор ищет **Function Declaration** перед запуском кода и исполняет их. В силу этого факта, **Function Declaration** можно вызывать до объявления:
 ```javascript
 // Function Declaration
 foo(); // foo
 
-function() {
+function foo() {
   console.log('foo');
-};
+}
 
 // Function Expression
 foo(); // ошибка
 
-function() {
+var foo = function() {
   console.log('foo');
-};
+}
 ```
 
 ## Объекты
@@ -44,7 +44,7 @@ function() {
 var foo = {
   a: 10,
   b: 20 
-}
+};
 
 console.log(foo.b); // 20
 ```
@@ -54,15 +54,15 @@ console.log(foo.b); // 20
 var foo = {
   'a': 10, 
   'b': 20
-}
+};
 
-console.log(foo.b) // 20
+console.log(foo.b); // 20
 ```
 
 * Доступ к атрибутам можно получить двумя способами: доступ через квадратную скобку `[]` и через точку `.`:
 ```javascript
-foo["b"] // 20
-foo.a // 10
+foo["b"]; // 20
+foo.a; // 10
 ```
 
 
@@ -74,7 +74,7 @@ var foo = {
   c: function() {
     return this.b;
   }
-}
+};
 
 foo.c(); // 20
 ```
@@ -82,34 +82,34 @@ foo.c(); // 20
 ```javascript
 var foo = {
   this.a = 10; // ошибка
-}
+};
 
 var bar = {
   a: 10,
   b: function() {
     return this.a;
   }
-}
+};
 
-foo.a // ошибка
-bar.b() // 10
+foo.a; // ошибка
+bar.b(); // 10
 ```
 * При определении объектов в конце строки пишется запятая `,`, а не точка с запятой `;`. Также в конце последней строки не ставится `,`:
 ```javascript
 var foo = {
   a: 10;  // ошибка
   b: 20;  // ошибка
-}
+};
 
 var bar = {
   a: 10,
   b: 20, // ошибка
-}
+};
 
 var spam = {
   a: 10,
   b: 20
-}
+};
 ```
 
 ## Конструкторы
@@ -129,17 +129,17 @@ function Foo() {
   this.a = 10;
 }
 
-console.log(Foo.a) // undefined
-console.log(new Foo().a) // 10
+console.log(Foo.a); // undefined
+console.log(new Foo().a); // 10
 
 Foo.a = 30;
-console.log(Foo.a) // 30
-console.log(new Foo().a) // 10
+console.log(Foo.a); // 30
+console.log(new Foo().a); // 10
 ```
 
 * По-умолчанию конструктор ничего не возвращает - его задача создать новый объект. Но если есть явный `return`:
   * Если `return` с объектом, то возвращается объект
-  * Если `return` с любым примитивом, то примитив отбрасывается и вернется вновь созданный объект
+  * Если `return` с любым примитивом, то примитив отбрасывается и вернется `this` - созданный объект 
   
 ```javascript
 // пример с объектом
@@ -178,11 +178,11 @@ console.log(foo.a, foo.b); // 100 200
 ```javascript
 var foo = {
   a: 10
-}
+};
 
 var bar = {
   b: 20
-}
+};
 
 bar.__proto__ = foo;
 console.log(bar.b); // 20
@@ -192,14 +192,14 @@ console.log(bar.a); // 10
 ```javascript
 bar.a = 100; 
 
-console.log(bar.a) // 100
-console.log(bar.__proto__.a) // 10
+console.log(bar.a); // 100
+console.log(bar.__proto__.a); // 10
 ```
 * Прототип можно указать при определении конструктора:
 ```javascript
 var foo = {
   a: 10
-}
+};
 
 function Bar() {
   this.b = 20;
@@ -207,21 +207,21 @@ function Bar() {
   this.__proto__ = foo;
 }
 
-console.log(new Bar().a) // 10
+console.log(new Bar().a); // 10
 ```
 * Прототип при указании через свойство `__proto__` может быть объектом или экземпляром конструктора. Это логично, т.к. экземпляр конструктора, в конечном счете, является объектом:
 ```javascript
 // прототип в виде объекта
 var foo = {
   a: 10
-}
+};
 
 function Bar() {
   this.b = 20;
   this.__proto__ = new Foo();
 }
 
-console.log(new Bar().a) // 10
+console.log(new Bar().a); // 10
 
 // прототип в виде экземпляра конструктора
 function Foo() {
@@ -233,13 +233,13 @@ function Bar() {
   this.__proto__ = new Foo();
 }
 
-console.log(new Bar().a) // 10
+console.log(new Bar().a); // 10
 ```
 * Указание прототипа через `__proto__` является плохой практикой, обычно конструктору ставят свойство `prototype`. `prototype` при вызове конструктора с ключевым словом `new` ставит свойство `__proto__` только что созданному объекту:
 ```javascript
 var foo = {
   a: 10
-}
+};
 
 function Bar() {
   this.b = 20;
@@ -247,7 +247,7 @@ function Bar() {
 
 Foo.prototype = foo;
 
-console.log(new Foo().a) // 10
+console.log(new Foo().a); // 10
 ```
 * Свойством `__proto__` считается системным и есть у всех объектов, а `prototype` можно выставить любому объекту, но особый смысл оно будет иметь только у конструктора.
 * Прототип при указании через свойство `prototype` конструктора может быть объектом или экземпляром конструктора:
@@ -255,7 +255,7 @@ console.log(new Foo().a) // 10
 // прототип в виде объекта
 var foo = {
   a: 10
-}
+};
 
 function Bar() {
   this.b = 20;
@@ -263,7 +263,7 @@ function Bar() {
 
 Bar.prototype = foo;
 
-console.log(new Bar().a) // 10
+console.log(new Bar().a); // 10
 
 // прототип в виде экземпляра конструктора
 function Foo() {
@@ -276,5 +276,5 @@ function Bar() {
 
 Bar.prototype = new Foo();
 
-console.log(new Bar().a) // 10
+console.log(new Bar().a); // 10
 ```
