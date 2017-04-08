@@ -120,7 +120,7 @@ function Foo() {
   this.b = 20;
 }
 
-foo = new Foo();
+var foo = new Foo();
 console.log(foo.a); // 10
 ```
 * Все свойства, указанные через `this` внутри конструктора будут доступны **только новым** объектам созданным через `new`. Чтобы задать атрибут конструктору его надо монки патчить:
@@ -168,8 +168,25 @@ function Foo(a, b) {
   this.b = b;
 }
 
-foo = new Foo(100, 200);
+var foo = new Foo(100, 200);
 console.log(foo.a, foo.b); // 100 200
+```
+* Конструктор может получить методы другого конструктора - "наследовать" его методы и свойства:
+```javascript
+function Foo() {
+  this.a = 10;
+  this.hello = function() {
+    return this.a;
+  }
+}
+
+function Bar() {
+  // "наследуем"
+  Foo.call(this);
+  this.b = 20;
+}
+
+console.log(new Bar().hello()); // 10
 ```
 
 ## Прототипы
@@ -277,4 +294,27 @@ function Bar() {
 Bar.prototype = new Foo();
 
 console.log(new Bar().a); // 10
+```
+* Можно реализовать цепочку прототипов - некое подобие "наследования":
+```javascript
+function Foo() {
+  this.a = 10;
+}
+
+function Bar() {
+  this.b = 20;
+}
+
+Bar.prototype = new Foo();
+
+function Spam() {
+  this.c = 30;
+}
+
+Spam.prototype = new Bar();
+
+var spam = Spam();
+
+console.log(spam.a, spam.b, spam.c); // 10 20 30
+
 ```
