@@ -349,5 +349,22 @@ Spam.prototype = new Bar();
 var spam = new Spam();
 
 console.log(spam.a, spam.b, spam.c); // 10 20 30
+```
+* Наследование в прототипном стиле также можно реализовать через `Object.create` - методы определяются в прототипе. Но это не наследует свойств:
+```javascript
+function Foo() {
+  this.a = 10; 
+}
 
+Foo.prototype.hello = function() {
+    return this.b;
+}
+
+function Bar() {
+  this.b = 20;
+}
+
+Bar.prototype = Object.create(Foo.prototype);
+
+console.log(new Bar().hello()); // 20
 ```
