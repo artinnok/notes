@@ -268,7 +268,7 @@ var foo = {
 
 function Bar() {
   this.b = 20;
-  this.__proto__ = new Foo();
+  this.__proto__ = foo;
 }
 
 console.log(new Bar().a); // 10
