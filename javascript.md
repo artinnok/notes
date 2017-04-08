@@ -313,7 +313,7 @@ function Spam() {
 
 Spam.prototype = new Bar();
 
-var spam = Spam();
+var spam = new Spam();
 
 console.log(spam.a, spam.b, spam.c); // 10 20 30
 
