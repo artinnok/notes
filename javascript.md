@@ -1,5 +1,11 @@
 # Заметки по JavaScript
 
+Содержание:
+1. [Определение функций](https://github.com/artinnok/notes/blob/master/javascript.md#Определение-функций)
+2. [Объекты](https://github.com/artinnok/notes/blob/master/javascript.md#Объекты)
+3. [Конструкторы](https://github.com/artinnok/notes/blob/master/javascript.md#Конструкторы)
+4. [Прототипы](https://github.com/artinnok/notes/blob/master/javascript.md#Прототипы)
+
 
 ## Определение функций
 * Function Expression:
