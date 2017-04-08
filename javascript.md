@@ -70,7 +70,7 @@ var foo = {
   }
 }
 
-foo.c() // 20
+foo.c(); // 20
 ```
 
 ## Конструкторы
@@ -82,5 +82,39 @@ function Foo() {
 }
 
 foo = new Foo();
-console.log(foo.a) // 10
+console.log(foo.a); // 10
+```
+* По-умолчанию конструктор ничего не возвращает - его задача создать новый объект. Но если есть явный `return`:
+  * Если `return` с объектом, то возвращается объект
+  * Если `return` с любым примитивом, то примитив отбрасывается
+  
+```javascript
+// пример с объектом
+function Foo() {
+  this.a = 10;
+  
+  return { a: 20 };
+}
+
+console.log(new Foo().a); // 20
+
+// пример с примитивом
+function Bar() {
+  this.b = 30;
+  
+  return { b: 40 };
+}
+
+console.log(new.Bar().b); // 04
+```
+
+* В конструктор при вызове можно передать аргументы, которые могут учавствовать при инициализации:
+```javascript
+function Foo(a, b) {
+  this.a = a;
+  this.b = b;
+}
+
+foo = new Foo(100, 200);
+console.log(foo.a, foo.b); // 100 200
 ```
