@@ -139,7 +139,7 @@ console.log(new Foo().a) // 10
 
 * По-умолчанию конструктор ничего не возвращает - его задача создать новый объект. Но если есть явный `return`:
   * Если `return` с объектом, то возвращается объект
-  * Если `return` с любым примитивом, то примитив отбрасывается
+  * Если `return` с любым примитивом, то примитив отбрасывается и вернется вновь созданный объект
   
 ```javascript
 // пример с объектом
@@ -149,7 +149,7 @@ function Foo() {
   return { a: 20 };
 }
 
-console.log(new Foo().a); // 20
+console.log(new Foo()); // Object {a: 20}
 
 // пример с примитивом
 function Bar() {
@@ -158,7 +158,7 @@ function Bar() {
   return "hello!";
 }
 
-console.log(new Bar().b); // 30
+console.log(new Bar()); // Bar {b: 30}
 ```
 
 * В конструктор при вызове можно передать аргументы, которые могут учавствовать при инициализации:
@@ -176,7 +176,6 @@ console.log(foo.a, foo.b); // 100 200
 * Прототип служит резервным хранилищем свойств и методов для объекта - если атрибута нет у самого объекта, поиск переходит к прототипам. Грубый аналог `ChainMap` в Python
 * Прототип указывается через свойство `__proto__`:
 ```javascript
-// присвоение __proto__ во время исполнения
 var foo = {
   a: 10
 }
@@ -188,19 +187,6 @@ var bar = {
 bar.__proto__ = foo;
 console.log(bar.b); // 20
 console.log(bar.a); // 10
-
-// присвоение __proto__ при определении
-var foo = {
-  a: 10
-}
-
-var bar = {
-  b: 20,
-  __proto__: foo
-}
-
-console.log(bar.b); // 20
-console.log(bar.a); // 10
 ```
 * Прототип используется только при чтении - т.е. если мы перепишем значение в самом объекте, это повлияет только на объект, но не на прототип:
 ```javascript
@@ -209,7 +195,7 @@ bar.a = 100;
 console.log(bar.a) // 100
 console.log(bar.__proto__.a) // 10
 ```
-* Прототип можно указать также при определении конструктора.:
+* Прототип можно указать при определении конструктора:
 ```javascript
 var foo = {
   a: 10
@@ -275,9 +261,9 @@ function Bar() {
   this.b = 20;
 }
 
-Foo.prototype = foo;
+Bar.prototype = foo;
 
-console.log(new Foo().a) // 10
+console.log(new Bar().a) // 10
 
 // прототип в виде экземпляра конструктора
 function Foo() {
@@ -288,7 +274,7 @@ function Bar() {
   this.b = 20;
 }
 
-Foo.prototype = new Foo();
+Bar.prototype = new Foo();
 
-console.log(new Foo().a) // 10
+console.log(new Bar().a) // 10
 ```
