@@ -195,3 +195,16 @@ bar.a = 100;
 console.log(bar.a) // 100
 console.log(bar.__proto__.a) // 10
 ```
+* Прототип можно указать также при определении конструктора в функциональном стиле:
+```javascript
+var foo = {
+  a: 10
+}
+
+function Bar() {
+  this.b = 20;
+  this.__proto__ = foo;
+}
+
+console.log(new Bar().a) // 10
+```
