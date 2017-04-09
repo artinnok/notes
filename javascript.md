@@ -443,8 +443,30 @@ Object.defineProperty(foo, "half", {
   }
 });
 
-console.log(foo.a, foo.b);
+console.log(foo.a, foo.b); // 10 20
 
 foo.half = 30;
-console.log(foo.a, foo.b);
+console.log(foo.a, foo.b); // 15 15
+```
+* Также геттер и сеттер можно можно указать прямо при объявлении через `get` и `set`:
+```javascript
+var foo = {
+  a: 10,
+  b: 20,
+  
+  get sum() {
+    return this.a + this.b;
+  }
+  
+  set half(value) {
+    this.a = value / 2;
+    this.b = value / 2;
+    return this;
+  }
+}
+
+console.log(foo.sum); // 30
+
+foo.half = 30;
+console.log(foo.a, foo.b); // 15 15
 ```
