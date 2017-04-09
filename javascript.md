@@ -456,7 +456,7 @@ var foo = {
   
   get sum() {
     return this.a + this.b;
-  }
+  },
   
   set half(value) {
     this.a = value / 2;
@@ -469,4 +469,40 @@ console.log(foo.sum); // 30
 
 foo.half = 30;
 console.log(foo.a, foo.b); // 15 15
+```
+* метод `Object.defineProperties(obj, descriptors)`:
+  * `obj` - объект, в который устанавливается дескриптор
+  * `descriptors` - объект, состоящий из дескрипторов
+```javascript
+var foo = {};
+
+Object.defineProperties(foo, {
+  a: {
+    value: 10,
+    writable: true,
+    configurable: true
+  }, 
+  b: {
+    value: 20,
+    writable: false,
+    configurable: false
+  }
+});
+```
+* метод `Object.keys(obj)` возвращает только `enumerable` свойства:
+```javascript
+var foo = {
+  a: 10,
+  b: 20
+};
+
+Object.defineProperty(foo, "c", {
+  enumerable: false
+});
+
+console.log(Object.keys(foo)); // ["a", "b"]
+```
+* метод `Object.getOwnPropertyNames(obj)` возвращает все свойства:
+```javascript
+console.log(Object.getOwnPropertyNames(foo)); // ["a", "b", "c"]
 ```
