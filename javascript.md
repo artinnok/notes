@@ -5,6 +5,7 @@
 2. [Объекты](https://github.com/artinnok/notes/blob/master/javascript.md#Объекты)
 3. [Конструкторы](https://github.com/artinnok/notes/blob/master/javascript.md#Конструкторы)
 4. [Прототипы](https://github.com/artinnok/notes/blob/master/javascript.md#Прототипы)
+5. [Дескрипторы](https://github.com/artinnok/notes/blob/master/javascript.md#Дескрипторы)
 
 
 ## Определение функций
@@ -367,4 +368,48 @@ function Bar() {
 Bar.prototype = Object.create(Foo.prototype);
 
 console.log(new Bar().hello()); // 20
+```
+
+## Дескрипторы
+* Дескриптор в JS похож на дескрипторы в Python - нужен для гибкого управления атрибутами объекта
+* Дескриптор объявляется через `Object.defineProperty(obj, prop, descriptor)`:
+  * `obj` - объект, в который добавляется дескриптор
+  * `prop` - имя свойства
+  * `descriptor` - объект дескриптора из следующих полей:
+    * `value` - значение свойства, по-умолчанию `undefined`
+    * `writable` - можно ли менять свойство, по-умолчанию `false`
+    * `configurabel` - можно ли удалять свойство, по-умолчанию `false`
+    * `enumerable` - видно ли свойство при обходе циклом, по-умолчанию `false`
+    * `get` - геттер, по-умолчанию `undefined`
+    * `set` - сеттер, по-умолчанию `undefinded`
+* Различные примеры использования дескрипторов:
+```javascript
+// обычное свойство - можно изменить, можно удалить, в цикле обходится
+var foo = {};
+
+Object.defineProperty(foo, "a", {
+  value: 10,
+  writable: true,
+  configurable: true,
+  enumerable: true
+});
+
+console.log(foo.a); // 10
+
+// определим обычное свойство
+var bar = {
+  b: 30
+};
+
+// изменим свойство на лету
+// свойство константа - нельзя переписать, нельзя удалить, в цикле обходится
+Object.defineProperty(bar, "b", {
+  value: 20,
+  writable: false,
+  configurable: false,
+  enumerable: true
+});
+
+bar.b = 40; // ошибка - свойство неизменяемое
+console.log(bar.b); // 30
 ```
