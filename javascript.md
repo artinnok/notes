@@ -488,6 +488,8 @@ Object.defineProperties(foo, {
     configurable: false
   }
 });
+
+console.log(foo.a, foo.b); // 10 20
 ```
 * метод `Object.keys(obj)` возвращает только `enumerable` свойства:
 ```javascript
