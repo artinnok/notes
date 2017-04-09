@@ -413,3 +413,38 @@ Object.defineProperty(bar, "b", {
 bar.b = 40; // ошибка - свойство неизменяемое
 console.log(bar.b); // 30
 ```
+* Определим геттер - оно похоже на `property` в Python. Геттер - это функция, которая не требует вызова и работает как свойство:
+```javascript
+var foo = {
+  a: 10,
+  b: 20
+};
+
+Object.defineProperty(foo, "sum", {
+  get: function() {
+    return this.a + this.b;
+  }
+});
+
+console.log(foo.sum);
+```
+* Определим сеттер:
+```javascript
+var foo = {
+  a: 10,
+  b: 20
+}
+
+Object.defineProperty(foo, "half", {
+  set: function(value) {
+    this.a = value / 2;
+    this.b = value / 2;
+    return this;
+  }
+});
+
+console.log(foo.a, foo.b);
+
+foo.half = 30;
+console.log(foo.a, foo.b);
+```
